@@ -156,12 +156,9 @@ public:
         return std::partial_ordering::unordered;
     }
 
-    explicit operator bool ()  {
-        if (!solidy || !denary || !liwry) return true;
-
-        return false;
+    explicit operator bool () const{
+        return (solidy || denary || liwry);
     }
-
 
 };
 
@@ -173,6 +170,7 @@ constexpr Moneybag Denier (0, 0, 1);
 // 1 liwr = 20 solidów = 240 denarów
 class Value {
 public:
+
     uint64_t denary;
 
     constexpr Value (const uint64_t n_denary) :
@@ -182,13 +180,13 @@ public:
    explicit constexpr Value (const Moneybag& another) :
         denary(another.denier_number() + 12 * another.solidus_number()  + 240 * another.livre_number()) {};
 
-    constexpr Value operator= (const Value& another){
-        if (this != &another){
-            denary = another.denary;
-        }
-
-        return *this;
-    }
+//    constexpr Value operator= (const Value& another){
+//        if (this != &another){
+//            denary = another.denary;
+//        }
+//
+//        return *this;
+//    }
 
     explicit operator std::string () const{
         return std::to_string (denary);
